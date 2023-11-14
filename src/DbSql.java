@@ -21,6 +21,25 @@ public class DbSql {
         }
     }
 
+
+    public void alleLaanere(){
+        try {
+            String sql = "select * from Laener";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("Connection to SQLite has been established.");
+            while (rs.next()) {
+                System.out.println(rs.getInt("lid"));
+                System.out.println(rs.getString("fnavn"));
+                System.out.println(rs.getString("enavn"));
+            }
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
     public void alleBoeger() {
         try {
             String sql = "select * from Bog";
@@ -36,6 +55,42 @@ public class DbSql {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public void soegLaaner(int lnr){
+        try {
+            String sql = "select * from Laener where lid="+String.valueOf(lnr);
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("Connection to SQLite has been established.");
+            if(rs.next()) {
+                System.out.println(rs.getInt("lid"));
+                System.out.println(rs.getString("fnavn"));
+                System.out.println(rs.getString("enavn"));
+            }
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void soegBog(int bogid){
+        try {
+            String sql = "select * from Bog where bogid="+String.valueOf(bogid);
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println("Connection to SQLite has been established.");
+            if(rs.next()) {
+                System.out.println(rs.getInt("bogid"));
+                System.out.println(rs.getString("titel"));
+                System.out.println(rs.getString("forfatter"));
+            }
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     public void udlaanBog(int bogId,int lId,String dato){
